@@ -48,15 +48,15 @@ namespace eCommerceStarterCode.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "3857d5e7-d75e-4cd6-9319-057c278f1db3",
-                            ConcurrencyStamp = "fde3caad-7c37-4f5e-8c6e-0f88c6c5ad08",
+                            Id = "7c44d7a4-954a-4d92-bf5e-ba62b75b8cf0",
+                            ConcurrencyStamp = "4ad7cc06-4e21-4f3d-a7cf-997e4753cc7b",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "b57576fd-bfae-439a-bb76-f278274526a1",
-                            ConcurrencyStamp = "38612b01-c7bc-4ba7-a76e-7348e45a6c9e",
+                            Id = "ec014bf1-de02-4945-9821-a20b7e8a6ef8",
+                            ConcurrencyStamp = "79ee5b4c-75be-4b1b-8918-ce7a94f98695",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -196,6 +196,122 @@ namespace eCommerceStarterCode.Migrations
                             RoleId = 3,
                             RoleName = "Admin"
                         });
+                });
+
+            modelBuilder.Entity("eCommerceStarterCode.Models.CategoryTable", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CategoryDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CategoryId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CategoryTables");
+                });
+
+            modelBuilder.Entity("eCommerceStarterCode.Models.Product", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<decimal>("ProductAverageRating")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("ProductDescription")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("ProductImage")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<decimal>("ProductPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("QuantityOnHand")
+                        .HasColumnType("int");
+
+                    b.HasKey("ProductId");
+
+                    b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            ProductId = 1,
+                            ProductAverageRating = 4m,
+                            ProductDescription = "Han Solo Action Figure",
+                            ProductPrice = 15m,
+                            QuantityOnHand = 5
+                        });
+                });
+
+            modelBuilder.Entity("eCommerceStarterCode.Models.ProductReview", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReviewRating")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ReviewText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ProductReviews");
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.User", b =>
@@ -339,6 +455,23 @@ namespace eCommerceStarterCode.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("eCommerceStarterCode.Models.ProductReview", b =>
+                {
+                    b.HasOne("eCommerceStarterCode.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("eCommerceStarterCode.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.UserRole", b =>

@@ -1,4 +1,5 @@
 ﻿using eCommerceStarterCode.Data;
+using eCommerceStarterCode.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,17 +20,45 @@ namespace eCommerceStarterCode.Controllers
         {
             _context = context;
         }
-        [HttpGet("user"), Authorize]
-        public IActionResult GetCurrentUser()
+        [HttpGet, Authorize]
+        public IActionResult GetCategories()
         {
-           
-            var userId = User.FindFirstValue("id");
-            var user = _context.Users.Find(userId);
-            if (user == null)
+            var catergories = _context.CategoryTables;
+
+            if (catergories == null)
             {
-                return Ok("user does not exist");
+                return NotFound();
             }
-            return Ok(user);
+            return Ok(catergories);
         }
+
+        [HttpPost, Authorize]
+        public IActionResult Post([FromBody] CategoryTable value)
+        {
+            _context.CategoryTables.Add(value);
+            _context.SaveChanges();
+            return StatusCode(201, value);
+        }
+
+        [HttpDelete, Authorize]
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                var selectedObject = _context.CategoryTables.Where(u => u.CategoryId == id).Select(u => u.CategoryId).SingleOrDefault();
+                _context.Remove(selectedObject);
+                _context.SaveChanges();
+                return Ok("code worked");
+            }
+            catch
+            {
+                return NotFound("no object");
+            }
+        } 
+        
+           
+
+            
     }
+
 }
