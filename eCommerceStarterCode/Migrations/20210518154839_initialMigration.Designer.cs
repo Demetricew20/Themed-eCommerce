@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eCommerceStarterCode.Data;
 
 namespace eCommerceStarterCode.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210518154839_initialMigration")]
+    partial class initialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,15 +50,15 @@ namespace eCommerceStarterCode.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a87f57db-0333-4cb5-b025-044788c7b1ea",
-                            ConcurrencyStamp = "f41493a6-13f2-4e4d-9c06-998e7ca6180c",
+                            Id = "43044b75-e719-489e-8dd4-84529802ceda",
+                            ConcurrencyStamp = "fbab2119-0805-4fed-ace8-1f1fd145625d",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "de617413-9ad9-4bbc-b747-e81235d45bec",
-                            ConcurrencyStamp = "9c69b4a1-5c63-4e15-bb5d-459231dc455c",
+                            Id = "dc41daeb-7b45-4eca-9d22-1d9cbe278df8",
+                            ConcurrencyStamp = "738a1024-4f63-41e3-b0a8-4f569aeaaf20",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -271,7 +273,7 @@ namespace eCommerceStarterCode.Migrations
                     b.ToTable("ProductReviews");
                 });
 
-            modelBuilder.Entity("eCommerceStarterCode.Models.SupplierProduct", b =>
+            modelBuilder.Entity("eCommerceStarterCode.Models.ShoppingCart", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -279,16 +281,14 @@ namespace eCommerceStarterCode.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
-                    b.HasKey("UserId");
+                    b.HasKey("UserId", "ProductId");
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("UserId1");
-
-                    b.ToTable("SupplierProducts");
+                    b.ToTable("ShoppingCarts");
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.User", b =>
@@ -451,7 +451,7 @@ namespace eCommerceStarterCode.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("eCommerceStarterCode.Models.SupplierProduct", b =>
+            modelBuilder.Entity("eCommerceStarterCode.Models.ShoppingCart", b =>
                 {
                     b.HasOne("eCommerceStarterCode.Models.Product", "Product")
                         .WithMany()
@@ -461,7 +461,9 @@ namespace eCommerceStarterCode.Migrations
 
                     b.HasOne("eCommerceStarterCode.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
 

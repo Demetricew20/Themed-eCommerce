@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace eCommerceStarterCode.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/")]
     [ApiController]
     public class CategoryController : ControllerBase
     {
@@ -23,29 +23,29 @@ namespace eCommerceStarterCode.Controllers
         [HttpGet, Authorize]
         public IActionResult GetCategories()
         {
-            var catergories = _context.CategoryTables;
+            var categories = _context.Categories;
 
-            if (catergories == null)
+            if (categories == null)
             {
                 return NotFound();
             }
-            return Ok(catergories);
+            return Ok(categories);
         }
 
         [HttpPost, Authorize]
-        public IActionResult Post([FromBody] CategoryTable value)
+        public IActionResult Post([FromBody] Category value)
         {
-            _context.CategoryTables.Add(value);
+            _context.Categories.Add(value);
             _context.SaveChanges();
             return StatusCode(201, value);
         }
 
-        [HttpDelete, Authorize]
-        public IActionResult Delete(int id)
+        [HttpDelete("{id}"), Authorize]
+        public IActionResult Delete (int id)
         {
             try
             {
-                var selectedObject = _context.CategoryTables.Where(u => u.CategoryId == id).Select(u => u.CategoryId).SingleOrDefault();
+                var selectedObject = _context.Categories.Where(u => u.CategoryId == id).SingleOrDefault();
                 _context.Remove(selectedObject);
                 _context.SaveChanges();
                 return Ok("code worked");

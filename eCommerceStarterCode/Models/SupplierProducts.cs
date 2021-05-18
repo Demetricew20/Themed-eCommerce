@@ -1,5 +1,4 @@
-﻿using eCommerceStarterCode.Data;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,20 +7,20 @@ using System.Threading.Tasks;
 
 namespace eCommerceStarterCode.Models
 {
-    public class UserRole
+    public class SupplierProduct
     {
-
         [Key]
-        [ForeignKey("User")]
+        [ForeignKey("UserRole")]
+
         public string UserId { get; set; }
         public User User { get; set; }
 
-        [Key]
-        [ForeignKey("AppRole")]
-        public int RoleId { get; set; }
-        public AppRole AppRole { get; set; }
+        [ForeignKey("Products")]
 
+        public int ProductId { get; set; }
 
+        public Product Product { get; set; }
         
+
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace eCommerceStarterCode.Models
 {
-    public class CategoryTable : IdentityUser
+    public class Category
     {
 
         public int CategoryId { get; set; }

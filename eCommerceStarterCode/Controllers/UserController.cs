@@ -20,24 +20,56 @@ namespace eCommerceStarterCode.Controllers
         {
             _context = context;
         }
-        [HttpGet("get-user"), Authorize]
-        public IActionResult GetCurrentUser()
+        [HttpGet("allUsers"), Authorize]
+        public IActionResult GetAllUsers()
         {
-            var userId = User.FindFirstValue("id");
-            var user = _context.Users.Find(userId);
-            if (user == null)
+            var users = _context.Users.ToList();
+            if (users == null)
             {
                 return NotFound();
             }
-            return Ok(user);
+            return Ok(users);
         }
-        [HttpPost("set-role")]
-        //Add Parameters once front end is built
-        public IActionResult GetRoleStatus()
+
+        [HttpGet("{id}/get"), Authorize]
+        public IActionResult GetUserById(string id)
         {
-            // Hard coded userId for testing
-            string userId = "75777217-c7ad-40f2-bf1c-92cdd2b0e0a0";
-            bool isSupplier = _context.Users.Where(u => u.Id == userId).Select(u => u.IsSupplier).SingleOrDefault();
+            try
+            {
+                var userId = _context.Users.Where(u => u.Id == id).SingleOrDefault();
+                return Ok(userId);
+            }
+            catch
+            {
+                return NotFound();
+            }
+            
+        }
+
+        [HttpDelete("{id}/delete"), Authorize]
+        public IActionResult DeleteUser(string id)
+        {
+            
+            try
+            {
+                var user = _context.Users.Where(u => u.Id == id).SingleOrDefault();
+                _context.Remove(user);
+                _context.SaveChanges();
+                return Ok();
+            }
+            catch
+            {
+                return NotFound();
+            }
+        
+        }
+
+
+        [HttpPost("{id}/setRole"), Authorize]
+        public IActionResult GetRoleStatus(string id)
+        {
+            var userId = _context.Users.Where(u => u.Id == id).SingleOrDefault();
+            bool isSupplier = _context.Users.Where(u => u.Id == id).Select(u => u.IsSupplier).SingleOrDefault();
             var user = _context.Users.Find(userId);
             if (user == null)
             {
@@ -49,7 +81,7 @@ namespace eCommerceStarterCode.Controllers
                 {
                     UserRole newUserRole = new UserRole()
                     {
-                        UserId = _context.Users.Where(u => u.Id == userId).Select(u => u.Id).SingleOrDefault(),
+                        UserId = _context.Users.Where(u => u.Id == id).Select(u => u.Id).SingleOrDefault(),
                         RoleId = 1
                     };
                     _context.UserRoles.Add(newUserRole);
@@ -61,7 +93,7 @@ namespace eCommerceStarterCode.Controllers
                 {
                     UserRole newUserRole = new UserRole()
                     {
-                        UserId = _context.Users.Where(u => u.Id == userId).Select(u => u.Id).SingleOrDefault(),
+                        UserId = _context.Users.Where(u => u.Id == id).Select(u => u.Id).SingleOrDefault(),
                         RoleId = 2
                     };
                     _context.UserRoles.Add(newUserRole);
@@ -71,7 +103,7 @@ namespace eCommerceStarterCode.Controllers
                 }
 
             }
-            return NotFound("Staus not set");
+            return NotFound("Status not set");
                 
         }
     }

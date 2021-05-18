@@ -10,8 +10,8 @@ using eCommerceStarterCode.Data;
 namespace eCommerceStarterCode.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210517230438_added product review table")]
-    partial class addedproductreviewtable
+    [Migration("20210518153413_addedsupplierproduct")]
+    partial class addedsupplierproduct
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,15 +50,15 @@ namespace eCommerceStarterCode.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "7c44d7a4-954a-4d92-bf5e-ba62b75b8cf0",
-                            ConcurrencyStamp = "4ad7cc06-4e21-4f3d-a7cf-997e4753cc7b",
+                            Id = "a87f57db-0333-4cb5-b025-044788c7b1ea",
+                            ConcurrencyStamp = "f41493a6-13f2-4e4d-9c06-998e7ca6180c",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "ec014bf1-de02-4945-9821-a20b7e8a6ef8",
-                            ConcurrencyStamp = "79ee5b4c-75be-4b1b-8918-ce7a94f98695",
+                            Id = "de617413-9ad9-4bbc-b747-e81235d45bec",
+                            ConcurrencyStamp = "9c69b4a1-5c63-4e15-bb5d-459231dc455c",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -200,62 +200,19 @@ namespace eCommerceStarterCode.Migrations
                         });
                 });
 
-            modelBuilder.Entity("eCommerceStarterCode.Models.CategoryTable", b =>
+            modelBuilder.Entity("eCommerceStarterCode.Models.Category", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CategoryDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("CategoryId")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("CategoryId");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("CategoryTables");
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.Product", b =>
@@ -314,6 +271,26 @@ namespace eCommerceStarterCode.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("ProductReviews");
+                });
+
+            modelBuilder.Entity("eCommerceStarterCode.Models.SupplierProduct", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("SupplierProducts");
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.User", b =>
@@ -470,6 +447,23 @@ namespace eCommerceStarterCode.Migrations
                     b.HasOne("eCommerceStarterCode.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("eCommerceStarterCode.Models.SupplierProduct", b =>
+                {
+                    b.HasOne("eCommerceStarterCode.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("eCommerceStarterCode.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1");
 
                     b.Navigation("Product");
 
