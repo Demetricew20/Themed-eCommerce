@@ -11,6 +11,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace eCommerceStarterCode.Managers
 {
     public class AuthenticationManager : IAuthenticationManager
@@ -18,6 +19,8 @@ namespace eCommerceStarterCode.Managers
         private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
         private User _user;
+
+        public object CustomClaimTypes { get; private set; }
 
         public AuthenticationManager(UserManager<User> userManager, IConfiguration configuration)
         {
@@ -53,13 +56,16 @@ namespace eCommerceStarterCode.Managers
             {
                 new Claim("username", _user.UserName),
                 new Claim("email", _user.Email),
-                new Claim("id", _user.Id)
+                new Claim("id", _user.Id),
+                new Claim("isSupplier", _user.IsSupplier.ToString())
+   
             };
 
             var roles = await _userManager.GetRolesAsync(_user);
             foreach(var role in roles)
             {
                 claims.Add(new Claim(ClaimTypes.Role, role));
+                
             }
 
             return claims;

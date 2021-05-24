@@ -7,20 +7,25 @@ using System.Threading.Tasks;
 
 namespace eCommerceStarterCode.Models
 {
-    public class ShoppingCart
+    public class OrderDetail
     {
         [Key]
-        [ForeignKey("User")]
-        public string UserId { get; set; }
-        public User User { get; set; }
+        [ForeignKey("OrderHeader")]
+        public int OrderId { get; set; }
+        public OrderHeader OrderHeader { get; set; }
 
         [Key]
-        [ForeignKey("Product")]
+        [ForeignKey("Products")]
         public int ProductId { get; set; }
         public Product Product { get; set; }
 
-
         public int Quantity { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal ProductPrice { get; set; }
+
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal ExtPrice { get; set; }
 
     }
 }

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "58c6c1ba-75d9-420d-827d-76fa8980bfa3",
+		"_postman_id": "2fec3979-9f24-4a36-8a5e-2461447bb694",
 		"name": "ASP_NET_eCommerce_Web_API",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"firstname\": \"David\",\r\n    \"lastname\": \"Lagrange\",\r\n    \"username\": \"dlagrange\",\r\n    \"password\": \"somePass12\",\r\n    \"email\": \"david@devcodecamp.com\",\r\n    \"phonenumber\": \"555-555-5555\"\r\n}",
+							"raw": "{\r\n    \"firstname\": \"Cash\",\r\n    \"lastname\": \"Myers\",\r\n    \"username\": \"cmyers\",\r\n    \"password\": \"somePass12\",\r\n    \"email\": \"cmyers880@gmail.com\",\r\n    \"phonenumber\": \"555-555-5555\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -44,7 +44,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"username\": \"dlagrange\",\r\n    \"password\": \"somePass12\"\r\n}",
+							"raw": "{\r\n    \"username\": \"cmyers\",\r\n    \"password\": \"somePass12\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -91,6 +91,368 @@
 								"api",
 								"examples",
 								"user"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Products",
+			"item": [
+				{
+					"name": "Get Product List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNteWVycyIsImVtYWlsIjoiY215ZXJzODgwQGdtYWlsLmNvbSIsImlkIjoiODhkMDQ5MzMtMTc3Zi00ZWU5LWIyNjUtZGI3MzI1MzYwODYxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTYyMTQ0ODk0OSwiaXNzIjoiZUNvbW1lcmNlV2ViQVBJIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMSJ9.iQU0iKE-tDa3EhUFNZE9vg2b0yUOkyQNq_wiS_Li3mU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:44394/api/products",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44394",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add a Product (Post)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNteWVycyIsImVtYWlsIjoiY215ZXJzODgwQGdtYWlsLmNvbSIsImlkIjoiZDkxNTgyZDAtZGM5MS00YTFiLWIzMWMtN2ExNzBjY2RlNTk3IiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTYyMTI5MTk3OCwiaXNzIjoiZUNvbW1lcmNlV2ViQVBJIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMSJ9.JJ1cpnryt6m_tSG021gNE8NW1wA5P-x6azRQYWK_mbU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productDescription\": \"Luke Skywalker Action Figure\",\r\n    \"productPrice\": 15.00,\r\n    \"quantityOnHand\": 5,\r\n    \"productAverageRating\": 4.00,\r\n    \"productImage\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44394/api/products",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44394",
+							"path": [
+								"api",
+								"products"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Get ALL Order Headers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNteWVycyIsImVtYWlsIjoiY215ZXJzODgwQGdtYWlsLmNvbSIsImlkIjoiODhkMDQ5MzMtMTc3Zi00ZWU5LWIyNjUtZGI3MzI1MzYwODYxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTYyMTQ0ODk0OSwiaXNzIjoiZUNvbW1lcmNlV2ViQVBJIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMSJ9.iQU0iKE-tDa3EhUFNZE9vg2b0yUOkyQNq_wiS_Li3mU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:44394/api/orderHeader",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44394",
+							"path": [
+								"api",
+								"orderHeader"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Order Header (Post)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNteWVycyIsImVtYWlsIjoiY215ZXJzODgwQGdtYWlsLmNvbSIsImlkIjoiODhkMDQ5MzMtMTc3Zi00ZWU5LWIyNjUtZGI3MzI1MzYwODYxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTYyMTQ0ODk0OSwiaXNzIjoiZUNvbW1lcmNlV2ViQVBJIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMSJ9.iQU0iKE-tDa3EhUFNZE9vg2b0yUOkyQNq_wiS_Li3mU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\": \"88d04933-177f-4ee9-b265-db7325360861\",\r\n    \"street\": \"720 S Marquette Street\",\r\n    \"address2\": \"Unit #217\",\r\n    \"city\": \"Racine\",\r\n    \"state\": \"WI\",\r\n    \"zipCode\": \"53403\",\r\n    \"countryCode\": \"USA\",\r\n    \"totalAmt\": 500.00,\r\n    \"orderDate\": \"2021-05-19T00:00:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44394/api/orderHeader",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44394",
+							"path": [
+								"api",
+								"orderHeader"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Order Header",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNteWVycyIsImVtYWlsIjoiY215ZXJzODgwQGdtYWlsLmNvbSIsImlkIjoiODhkMDQ5MzMtMTc3Zi00ZWU5LWIyNjUtZGI3MzI1MzYwODYxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTYyMTQ0ODk0OSwiaXNzIjoiZUNvbW1lcmNlV2ViQVBJIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMSJ9.iQU0iKE-tDa3EhUFNZE9vg2b0yUOkyQNq_wiS_Li3mU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44394/api/orderHeader/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44394",
+							"path": [
+								"api",
+								"orderHeader",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get ALL Order Details",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNteWVycyIsImVtYWlsIjoiY215ZXJzODgwQGdtYWlsLmNvbSIsImlkIjoiODhkMDQ5MzMtMTc3Zi00ZWU5LWIyNjUtZGI3MzI1MzYwODYxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTYyMTQ0ODk0OSwiaXNzIjoiZUNvbW1lcmNlV2ViQVBJIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMSJ9.iQU0iKE-tDa3EhUFNZE9vg2b0yUOkyQNq_wiS_Li3mU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:44394/api/orderDetail",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44394",
+							"path": [
+								"api",
+								"orderDetail"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Order Detail (Post)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNteWVycyIsImVtYWlsIjoiY215ZXJzODgwQGdtYWlsLmNvbSIsImlkIjoiODhkMDQ5MzMtMTc3Zi00ZWU5LWIyNjUtZGI3MzI1MzYwODYxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTYyMTQ0ODk0OSwiaXNzIjoiZUNvbW1lcmNlV2ViQVBJIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMSJ9.iQU0iKE-tDa3EhUFNZE9vg2b0yUOkyQNq_wiS_Li3mU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"orderId\":  3,\r\n    \"productId\": 3,\r\n    \"quantity\": 2,\r\n    \"productPrice\": 15.00,\r\n    \"extPrice\": 30.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44394/api/orderDetail/",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44394",
+							"path": [
+								"api",
+								"orderDetail",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order Details by Order ",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNteWVycyIsImVtYWlsIjoiY215ZXJzODgwQGdtYWlsLmNvbSIsImlkIjoiODhkMDQ5MzMtMTc3Zi00ZWU5LWIyNjUtZGI3MzI1MzYwODYxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTYyMTQ0ODk0OSwiaXNzIjoiZUNvbW1lcmNlV2ViQVBJIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMSJ9.iQU0iKE-tDa3EhUFNZE9vg2b0yUOkyQNq_wiS_Li3mU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:44394/api/orderDetail/order/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44394",
+							"path": [
+								"api",
+								"orderDetail",
+								"order",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Order Details by Product",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNteWVycyIsImVtYWlsIjoiY215ZXJzODgwQGdtYWlsLmNvbSIsImlkIjoiODhkMDQ5MzMtMTc3Zi00ZWU5LWIyNjUtZGI3MzI1MzYwODYxIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiVXNlciIsImV4cCI6MTYyMTQ0ODk0OSwiaXNzIjoiZUNvbW1lcmNlV2ViQVBJIiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NTAwMSJ9.iQU0iKE-tDa3EhUFNZE9vg2b0yUOkyQNq_wiS_Li3mU",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:44394/api/orderDetail/product/2",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44394",
+							"path": [
+								"api",
+								"orderDetail",
+								"product",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ShoppingCart",
+			"item": [
+				{
+					"name": "Get A User's Shopping Cart",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNteWVycyIsImVtYWlsIjoiY215ZXJzODgwQGdtYWlsLmNvbSIsImlkIjoiODhkMDQ5MzMtMTc3Zi00ZWU5LWIyNjUtZGI3MzI1MzYwODYxIiwiZXhwIjoxNjIxNTMxMzM5LCJpc3MiOiJlQ29tbWVyY2VXZWJBUEkiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.zHj-q2Rw_4OFU2MJx9-xdPFbw5hpavFbzaEhzAJE6Hw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "https://localhost:44394/api/shoppingCart/88d04933-177f-4ee9-b265-db7325360861",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44394",
+							"path": [
+								"api",
+								"shoppingCart",
+								"88d04933-177f-4ee9-b265-db7325360861"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post a Shopping Cart Entry",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNteWVycyIsImVtYWlsIjoiY215ZXJzODgwQGdtYWlsLmNvbSIsImlkIjoiODhkMDQ5MzMtMTc3Zi00ZWU5LWIyNjUtZGI3MzI1MzYwODYxIiwiZXhwIjoxNjIxNTMxMzM5LCJpc3MiOiJlQ29tbWVyY2VXZWJBUEkiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.zHj-q2Rw_4OFU2MJx9-xdPFbw5hpavFbzaEhzAJE6Hw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"UserId\" : \"88d04933-177f-4ee9-b265-db7325360861\",\r\n    \"ProductId\" : 2,\r\n    \"Quantity\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44394/api/shoppingCart/88d04933-177f-4ee9-b265-db7325360861/1",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44394",
+							"path": [
+								"api",
+								"shoppingCart",
+								"88d04933-177f-4ee9-b265-db7325360861",
+								"1"
+							],
+							"query": [
+								{
+									"key": "Authorize",
+									"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNteWVycyIsImVtYWlsIjoiY215ZXJzODgwQGdtYWlsLmNvbSIsImlkIjoiODhkMDQ5MzMtMTc3Zi00ZWU5LWIyNjUtZGI3MzI1MzYwODYxIiwiZXhwIjoxNjIxNTMxMzM5LCJpc3MiOiJlQ29tbWVyY2VXZWJBUEkiLCJhdWQiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIn0.zHj-q2Rw_4OFU2MJx9-xdPFbw5hpavFbzaEhzAJE6Hw",
+									"disabled": true
+								}
 							]
 						}
 					},

@@ -48,15 +48,15 @@ namespace eCommerceStarterCode.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a87f57db-0333-4cb5-b025-044788c7b1ea",
-                            ConcurrencyStamp = "f41493a6-13f2-4e4d-9c06-998e7ca6180c",
+                            Id = "b0ba0205-42a7-41f5-a495-2c6563cdcf18",
+                            ConcurrencyStamp = "757815db-e5b0-4520-bf3d-ad39f8320c8c",
                             Name = "User",
                             NormalizedName = "USER"
                         },
                         new
                         {
-                            Id = "de617413-9ad9-4bbc-b747-e81235d45bec",
-                            ConcurrencyStamp = "9c69b4a1-5c63-4e15-bb5d-459231dc455c",
+                            Id = "dd1faf30-d9a5-4e8a-aec6-25a3e2a64635",
+                            ConcurrencyStamp = "60ba509b-a9b0-4e43-a669-f088bf927f56",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         });
@@ -211,6 +211,83 @@ namespace eCommerceStarterCode.Migrations
                     b.HasKey("CategoryId");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = 1,
+                            CategoryDescription = "Action Figure"
+                        },
+                        new
+                        {
+                            CategoryId = 2,
+                            CategoryDescription = "Video Game"
+                        });
+                });
+
+            modelBuilder.Entity("eCommerceStarterCode.Models.OrderDetail", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("ExtPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("ProductPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrderId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("OrderDetail");
+                });
+
+            modelBuilder.Entity("eCommerceStarterCode.Models.OrderHeader", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CountryCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalAmt")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ZipCode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("OrderHeader");
                 });
 
             modelBuilder.Entity("eCommerceStarterCode.Models.Product", b =>
@@ -220,14 +297,20 @@ namespace eCommerceStarterCode.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("ProductAverageRating")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,1)");
 
                     b.Property<string>("ProductDescription")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("ProductImage")
                         .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("ProductPrice")
                         .HasColumnType("decimal(18,2)");
@@ -237,15 +320,29 @@ namespace eCommerceStarterCode.Migrations
 
                     b.HasKey("ProductId");
 
+                    b.HasIndex("CategoryId");
+
                     b.ToTable("Products");
 
                     b.HasData(
                         new
                         {
                             ProductId = 1,
+                            CategoryId = 1,
                             ProductAverageRating = 4m,
-                            ProductDescription = "Han Solo Action Figure",
+                            ProductDescription = "Great For Kids",
+                            ProductName = " Han Solo Action Figure",
                             ProductPrice = 15m,
+                            QuantityOnHand = 5
+                        },
+                        new
+                        {
+                            ProductId = 2,
+                            CategoryId = 2,
+                            ProductAverageRating = 2m,
+                            ProductDescription = "Still in the original box",
+                            ProductName = "Star Wars Jedi Arena",
+                            ProductPrice = 30m,
                             QuantityOnHand = 5
                         });
                 });
@@ -271,6 +368,24 @@ namespace eCommerceStarterCode.Migrations
                     b.ToTable("ProductReviews");
                 });
 
+            modelBuilder.Entity("eCommerceStarterCode.Models.ShoppingCart", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "ProductId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ShoppingCarts");
+                });
+
             modelBuilder.Entity("eCommerceStarterCode.Models.SupplierProduct", b =>
                 {
                     b.Property<string>("UserId")
@@ -279,14 +394,9 @@ namespace eCommerceStarterCode.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UserId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UserId");
+                    b.HasKey("UserId", "ProductId");
 
                     b.HasIndex("ProductId");
-
-                    b.HasIndex("UserId1");
 
                     b.ToTable("SupplierProducts");
                 });
@@ -376,7 +486,7 @@ namespace eCommerceStarterCode.Migrations
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
 
-                    b.HasKey("UserId");
+                    b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
@@ -434,6 +544,45 @@ namespace eCommerceStarterCode.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("eCommerceStarterCode.Models.OrderDetail", b =>
+                {
+                    b.HasOne("eCommerceStarterCode.Models.OrderHeader", "OrderHeader")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("eCommerceStarterCode.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OrderHeader");
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("eCommerceStarterCode.Models.OrderHeader", b =>
+                {
+                    b.HasOne("eCommerceStarterCode.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("eCommerceStarterCode.Models.Product", b =>
+                {
+                    b.HasOne("eCommerceStarterCode.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("eCommerceStarterCode.Models.ProductReview", b =>
                 {
                     b.HasOne("eCommerceStarterCode.Models.Product", "Product")
@@ -451,6 +600,25 @@ namespace eCommerceStarterCode.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("eCommerceStarterCode.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("eCommerceStarterCode.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("eCommerceStarterCode.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("eCommerceStarterCode.Models.SupplierProduct", b =>
                 {
                     b.HasOne("eCommerceStarterCode.Models.Product", "Product")
@@ -461,7 +629,9 @@ namespace eCommerceStarterCode.Migrations
 
                     b.HasOne("eCommerceStarterCode.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
 

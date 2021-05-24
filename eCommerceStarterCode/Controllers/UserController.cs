@@ -20,7 +20,7 @@ namespace eCommerceStarterCode.Controllers
         {
             _context = context;
         }
-        [HttpGet("allUsers"), Authorize]
+        [HttpGet("allUsers")]
         public IActionResult GetAllUsers()
         {
             var users = _context.Users.ToList();
@@ -31,13 +31,20 @@ namespace eCommerceStarterCode.Controllers
             return Ok(users);
         }
 
-        [HttpGet("{id}/get"), Authorize]
-        public IActionResult GetUserById(string id)
+        [HttpGet(), Authorize]
+        public IActionResult GetUserById()
         {
+            var userId = User.FindFirstValue("id");
+            var user = _context.Users.Find(userId);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
             try
             {
-                var userId = _context.Users.Where(u => u.Id == id).SingleOrDefault();
-                return Ok(userId);
+                var userInfo = _context.Users.Where(u => u.Id == userId).SingleOrDefault();
+                return Ok(userInfo);
             }
             catch
             {
@@ -46,14 +53,30 @@ namespace eCommerceStarterCode.Controllers
             
         }
 
-        [HttpDelete("{id}/delete"), Authorize]
-        public IActionResult DeleteUser(string id)
+        [HttpPut(), Authorize]
+        public IActionResult EditUser([FromBody]User value)
         {
-            
+            var userId = User.FindFirstValue("id");
+            var user = _context.Users.Find(userId);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+
+            var userInfo = _context.Users.Where(u => u.Id == userId).SingleOrDefault();
+            _context.Users.Update(value);
+            _context.SaveChanges();
+            return Ok(user);
+        }
+
+        [HttpDelete("{userId}"), Authorize]
+        public IActionResult DeleteUser(string userId)
+        {
+
             try
             {
-                var user = _context.Users.Where(u => u.Id == id).SingleOrDefault();
-                _context.Remove(user);
+                var userInfo = _context.Users.Where(u => u.UserName == userId).SingleOrDefault();
+                _context.Remove(userInfo);
                 _context.SaveChanges();
                 return Ok();
             }
@@ -62,49 +85,6 @@ namespace eCommerceStarterCode.Controllers
                 return NotFound();
             }
         
-        }
-
-
-        [HttpPost("{id}/setRole"), Authorize]
-        public IActionResult GetRoleStatus(string id)
-        {
-            var userId = _context.Users.Where(u => u.Id == id).SingleOrDefault();
-            bool isSupplier = _context.Users.Where(u => u.Id == id).Select(u => u.IsSupplier).SingleOrDefault();
-            var user = _context.Users.Find(userId);
-            if (user == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                if (!isSupplier)
-                {
-                    UserRole newUserRole = new UserRole()
-                    {
-                        UserId = _context.Users.Where(u => u.Id == id).Select(u => u.Id).SingleOrDefault(),
-                        RoleId = 1
-                    };
-                    _context.UserRoles.Add(newUserRole);
-                    _context.SaveChanges();
-                    return Ok(newUserRole.RoleId);
-
-                }
-                else if (isSupplier)
-                {
-                    UserRole newUserRole = new UserRole()
-                    {
-                        UserId = _context.Users.Where(u => u.Id == id).Select(u => u.Id).SingleOrDefault(),
-                        RoleId = 2
-                    };
-                    _context.UserRoles.Add(newUserRole);
-                    _context.SaveChanges();
-                    return Ok(newUserRole.RoleId);
-
-                }
-
-            }
-            return NotFound("Status not set");
-                
         }
     }
 }

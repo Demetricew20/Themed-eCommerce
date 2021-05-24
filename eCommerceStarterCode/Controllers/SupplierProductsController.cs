@@ -1,12 +1,10 @@
 ﻿using eCommerceStarterCode.Data;
 using eCommerceStarterCode.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace eCommerceStarterCode.Controllers
 {
@@ -30,6 +28,7 @@ namespace eCommerceStarterCode.Controllers
             }
             return Ok(supplierProducts);
         }
+
         [HttpPost, Authorize]
         public IActionResult PostSupplierProducts([FromBody] SupplierProduct value)
         {
@@ -37,14 +36,21 @@ namespace eCommerceStarterCode.Controllers
             _context.SaveChanges();
             return StatusCode(201, value);
         }
-        [HttpDelete("{userid}/{productid}"), Authorize]
 
-        public IActionResult DeleteSupplierProduct(string userid, int productid)
+        [HttpDelete("{userid}/{productid}"), Authorize]
+        public IActionResult DeleteSupplierProduct(int productid)
         {
+            var userId = User.FindFirstValue("id");
+            var user = _context.Users.Find(userId);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+            
             try
             {
-                var compoundKey = new { userid, productid };
-                var selectedObject = _context.SupplierProducts.Where(p => ( p.UserId == userid && p.ProductId == productid )).SingleOrDefault();
+                var compoundKey = new { userId, productid };
+                var selectedObject = _context.SupplierProducts.Where(p => ( p.UserId == userId && p.ProductId == productid )).SingleOrDefault();
                 _context.Remove(selectedObject);
                 _context.SaveChanges();
                 return Ok("product removed");

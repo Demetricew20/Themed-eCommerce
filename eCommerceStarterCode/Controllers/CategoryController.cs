@@ -23,7 +23,7 @@ namespace eCommerceStarterCode.Controllers
         [HttpGet, Authorize]
         public IActionResult GetCategories()
         {
-            var categories = _context.Categories;
+            var categories = _context.Categories.ToList();
 
             if (categories == null)
             {
@@ -32,7 +32,23 @@ namespace eCommerceStarterCode.Controllers
             return Ok(categories);
         }
 
-        [HttpPost, Authorize]
+        [HttpGet("{id}"), Authorize]
+
+        public IActionResult GetCategoryById(int id)
+        {
+            try
+            {
+                var selectedObject = _context.Categories.Where(u => u.CategoryId == id).SingleOrDefault();
+ 
+                return Ok(selectedObject);
+            }
+            catch
+            {
+                return NotFound("no object");
+            }
+        }
+
+        [HttpPost]
         public IActionResult Post([FromBody] Category value)
         {
             _context.Categories.Add(value);

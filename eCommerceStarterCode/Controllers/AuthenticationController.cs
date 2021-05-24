@@ -23,7 +23,7 @@ namespace eCommerceStarterCode.Controllers
             _authManager = authManager;
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         [ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> RegisterUser([FromBody] UserForRegistrationDto userForRegistration)
         {
